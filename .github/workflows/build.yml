@@ -16,7 +16,13 @@ jobs:
         with:
           channel: stable
       - name: Generate android project
-        run: flutter create --platforms=android --org com.robot --project-name robot_chatbot .
+        run: |
+          mkdir -p /tmp/bak
+          cp pubspec.yaml /tmp/bak/pubspec.yaml
+          cp lib/main.dart /tmp/bak/main.dart
+          flutter create --platforms=android --org com.robot --project-name robot_chatbot .
+          cp /tmp/bak/pubspec.yaml pubspec.yaml
+          cp /tmp/bak/main.dart lib/main.dart
       - name: Patch manifest
         run: |
           F=android/app/src/main/AndroidManifest.xml
